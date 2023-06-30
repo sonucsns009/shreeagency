@@ -51,7 +51,7 @@ class Login extends CI_Controller {
 															'status'=>$result[0]['status']);
 								
 								$this->session->set_userdata('logged_in', $session_data);
-								redirect('backend/Dashboard', 'refresh');
+								redirect('backend/Dashboard/index', 'refresh');
 							}
 							else  if($status=='Inactive')
 							{

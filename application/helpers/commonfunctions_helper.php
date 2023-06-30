@@ -92,6 +92,7 @@ function getSellingPrice($rst_id,$item_price)
 }
 function languageConversion($translate_text,$target)
 {
+	
 	$apiKey = 'AIzaSyAt7o6V5RlTQLWlKjfgwjOgaOhOBSNop0w';
 	$text = $translate_text;
  	$url = 'https://www.googleapis.com/language/translate/v2?key='.$apiKey.'&q='. rawurlencode($text).'&source=en&target='.$target;
@@ -193,20 +194,18 @@ function create_thumb($width,$height,$file_path)
 						
 		
 			//echo $message;exit;
-
 	
 			$ci->load->library('email', $config);
 			$ci->email->set_newline("\r\n");  
 			$ci->email->initialize($config);
-			//$ci->email->from('sales@nashikproperty.com','NashikProperty.com');
-			$ci->email->from('support@deseos.com','deseos.com');
+			$ci->email->from('sales@nashikproperty.com','NashikProperty.com');
 			$ci->email->to($user_email); 
 			//$this->email->to("shantilal@nashikproperty.com"); 
 			$ci->email->subject($strSubjectMessage);
 			$ci->email->message($strMessage); 
 			$ci->email->send();
 	}
- 	function smt_send_mail($userEmail,$output_arr,$input_arr)
+ 	function smt_send_mail_old($userEmail,$output_arr,$input_arr)
 	{
 		
 		$ci = get_instance();
@@ -225,7 +224,7 @@ function create_thumb($width,$height,$file_path)
 		$ci->load->library('email', $config);		
 		$ci->email->initialize($config);
 		$ci->email->set_newline("\r\n");  
-		$ci->email->from('support@deseos.com','deseos.com');
+		$ci->email->from('info@csns.co.in','deseos.csns.in');
 		$ci->email->to($userEmail); 
 		if(isset($input_arr['subject_mail']))
 		{
@@ -255,6 +254,42 @@ function create_thumb($width,$height,$file_path)
 			//print_r($ci->email);echo $str_email;exit;
 			return false;
 		}
+	}
+	function smt_send_mail($userEmail,$output_arr1,$input_arr1)
+	{
+		
+		$ci = get_instance();
+		
+		require FCPATH .'vendor/sendgride/vendor/autoload.php';
+			//Dotenv::load(__DIR__);
+			$email = new \SendGrid\Mail\Mail(); 
+			$personalization1=new \SendGrid\Mail\Personalization();
+
+			$email->setFrom("sonu.php009@gmail.com", "deseos.com");
+			if(isset($input_arr1['subject_mail']))
+			{
+				$email->setSubject($input_arr1['subject_mail']);
+			}
+			 $personalization1->addTo(new SendGrid\Mail\To(trim($userEmail)));
+			//$email->addTo($userEmail);
+			//$email->addContent("text/plain", "and easy to do anywhere, even with PHP");
+			 $message = $ci->load->view('emails/'.$output_arr1['view_load'],$input_arr1,true);
+			 $email->addContent(
+            "text/html", $message
+	        );
+	        $email->addPersonalization($personalization1);
+			$sendgrid = new \SendGrid('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');
+			try {
+			    $response = $sendgrid->send($email);
+			    //print $response->statusCode() . "\n";
+			    //print_r($response->headers());
+			    //print $response->body() . "\n";
+			} catch (Exception $e) {
+			    echo 'Caught exception: '. $e->getMessage() ."\n";
+			}
+
+
+
 	}
 	### FUNCTION TO SEND SMS 
 	function fnSendSms($strMessage = "", $strMobile= "")
@@ -417,6 +452,11 @@ if ( ! function_exists('fnSendNotification'))
 {
 	function fnSendNotification($strTitle, $strMessage, $arrGcmID, $arrData=array()) 
 	{
+		$order_id=0;
+		if($arrData['order_id']>0)
+		{
+			$order_id=$arrData['order_id'];
+		}
 		$msg = array(
 						'message' => "$strMessage",
 						'contentTitle' => "$strTitle", 
@@ -431,6 +471,7 @@ if ( ! function_exists('fnSendNotification'))
 						'sound' => 1, 
 						'status' => "$status1"
 					);
+
 			/*
 			$fields = array(
 							'registration_ids' => $arrGcmID,
@@ -439,12 +480,14 @@ if ( ! function_exists('fnSendNotification'))
 							'data' 			   => $msg,
 							);
 			*/
+			
 			$fields = array(
              'registration_ids' => $arrGcmID,
              'notification' => array('contentTitle' => $strTitle, 'body' => $strMessage,'sound'=>'Default', 'data'=>$msg),
              'priority' => 'high',
              'data' 			   => $msg,
-            );				
+            );			
+           // print_r($fields);exit;	
 			//echo "<pre>"; print_r( $fields ); //die;
 			define('FIREBASE_API_KEY', 'AAAAEjeytAs:APA91bHwVZU3r47_KmSuNdxlM3FoND86Nez9Brt4sYAMOU-vSNs8HsT1DmU3OAzZtF8PztlrcAZQgG3_Hdh7067sunytxUmr7KdJoB9eGrlgaN5765U5D-Xg0erHUlt2WCA3ceZzk20k');
 			//define( 'FIREBASE_API_KEY', 'AIzaSyD3JzXow72jcze-PvQevko5KWNsgjLvuQ0' );
@@ -486,7 +529,7 @@ if ( ! function_exists('fnSendNotification'))
 			//Now close the connection
 			curl_close($ch);
 			#print_r($fields); 
-			#print_r($result);exit;	 
+			//print_r($result);exit;	 
 			//and return the result 
 			return $result;
 	}

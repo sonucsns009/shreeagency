@@ -14,7 +14,7 @@ Class Login_model extends CI_Model {
 			$condition = "username =" . "'" . $data['username'] . "' AND user_type='Admin'";
 						  
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -27,7 +27,7 @@ Class Login_model extends CI_Model {
 			$condition = "username =" . "'" . $data['username'] . "' AND user_type='Subadmin' ";
 						  
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -49,7 +49,7 @@ Class Login_model extends CI_Model {
 						 AND user_type='Admin'";
 						  
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -70,7 +70,7 @@ Class Login_model extends CI_Model {
 						AND " . "admin_password =" . "'" . md5($data['admin_password']) . "'AND user_type='Subadmin'";
 						
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -95,7 +95,7 @@ Class Login_model extends CI_Model {
 	{
 			$condition = "user_name =" . "'" . $username . "'";
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -110,12 +110,12 @@ Class Login_model extends CI_Model {
 	}
 	public function resetPass($new_password,$admin_email)
 	{
-		$sts = $this->db->query('Update '.TBLPREFIX.'admin SET admin_password ="'.md5($new_password).'" WHERE admin_email="'.$admin_email.'"');
+		$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($new_password).'" WHERE admin_email="'.$admin_email.'"');
 		return $sts;
 	}
 	public function checkexist($email)
 	{
-		$query = $this->db->query('select admin_id from '.TBLPREFIX.'admin where admin_email="'.$email.'"');
+		$query = $this->db->query('select admin_id from '.TBPREFIX.'admin where admin_email="'.$email.'"');
 		return $query->result_array();
 	}
 	
@@ -126,7 +126,7 @@ Class Login_model extends CI_Model {
 			$condition = " admin_email='".$admin_email."' AND user_type='Admin'";
 						  
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -137,7 +137,7 @@ Class Login_model extends CI_Model {
 			$condition = "admin_email =" . "'" . $admin_email . "' AND user_type='Subadmin'";
 						
 			$this->db->select('*');
-			$this->db->from(TBLPREFIX.'admin');
+			$this->db->from(TBPREFIX.'admin');
 			$this->db->where($condition);
 			$this->db->limit(1);
 			$query = $this->db->get();
@@ -149,13 +149,13 @@ Class Login_model extends CI_Model {
 	{
 		if($user_type=='Admin')
 		{
-			$sts = $this->db->query('Update '.TBLPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
+			$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
 							WHERE admin_email="'.$admin_email.'"');
 			return $sts;
 		}
 		if($user_type=='Subadmin')
 		{
-			$sts = $this->db->query('Update '.TBLPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
+			$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
 							WHERE admin_email="'.$admin_email.'"');
 			return $sts;
 		}

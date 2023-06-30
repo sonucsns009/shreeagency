@@ -3,7 +3,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 footer-copyright">
-                        <p class="mb-0">Copyright <?php echo date('Y');?> © Deseos All rights reserved.</p>
+                        <p class="mb-0">Copyright <?php echo date('Y');?> © LOBA All rights reserved.</p>
                     </div>
                     <div class="col-md-6">
                         <!--<p class="pull-right mb-0">Hand crafted & made with<i class="fa fa-heart"></i></p>-->
@@ -30,7 +30,6 @@
 <script src="<?php echo base_url('template/admin/');?>assets/js/icons/feather-icon/feather-icon.js"></script>
 
 
-<script src="<?php echo base_url('template/admin/');?>assets/js/booking_validation.js"></script>
 
 
 <!--Timepicker jquery-->
@@ -134,15 +133,8 @@ document.getElementById("doPrintinvoice").addEventListener("click", function() {
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js"></script>
 <script src="<?php echo base_url('template/admin/');?>assets/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="<?php echo base_url('template/admin/');?>assets/js/select2.js"></script>
-
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $("#rst_category_type").select2();
-    
-});
-
 $(document).ready(function(){
   $("#frm_addCuisine").on("submit", function(){
     $("#body").fadeOut();
@@ -170,6 +162,20 @@ $(document).ready(function(){
   </script>
 <script type="text/javascript">
 //setInterval(getNotification, 5000);
+//Declaration of function that will insert data into database
+ function senddata(filename){
+        var file = filename;
+        alert(file);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('backend/');?>Products/manageProductsNew",
+            data: {file},
+            async: true,
+            success: function(html){
+                $("#result").html(html);
+            }
+        })
+        }
 
 function getNotification()
 {
@@ -324,63 +330,6 @@ $("#clr_btn").click(function () {
     $(".checkBoxClass").prop('checked',false);
     $("#ckbCheckAll").prop('checked',false);
 });
-
-
-
-/*new code for add notification - 14sep22*/
-function getNotificationChangeContent()
-{
-    //alert();
-    var not_type=document.getElementById('not_type').value;
-    if(not_type=="hot_deals")
-    {
-		$('#div_noti_rest').hide();
-        $('#div_noti_product').hide();
-       $('#div_noti_hotdeal').show();
-    }
-	else if(not_type=="store")
-    {
-        $('#div_noti_rest').show();
-        $('#div_noti_product').hide();
-        $('#div_noti_hotdeal').hide();
-    }
-    else if(not_type=="product")
-    {
-        $('#div_noti_rest').show();
-        $('#div_noti_product').show();
-        $('#div_noti_hotdeal').hide();
-    }
-    else
-    {
-         $('#div_noti_rest').hide();
-        $('#div_noti_product').hide();
-        $('#div_noti_hotdeal').hide();
-
-    }
-}
-
-function getNotificationProductByRest()
-{
-    //alert();
-    var sel_rest=document.getElementById('sel_rest').value;
-    $.ajax({
-                      type:"POST",
-                      url:"<?php echo base_url();?>backend/Notification/getProductByStore",
-                       data:{
-                               sel_rest:sel_rest,
-                               
-                             }              
-                        }).done(function(message){
-                        var res=message.split('_|_');
-                          
-
-                            $('#sel_product').empty();
-                            $('#sel_product').append(message);
-      
-                       });
-}
-
-/* end of new code for add notification - 14sep22*/
 function getChangeContent()
 {
     //alert();

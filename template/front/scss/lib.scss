@@ -1,0 +1,34 @@
+@import 'compass';
+@import 'bootstrap/bootstrap';
+//@import 'bootstrap/bootstrap-grid';
+@import 'bootstrap/bootstrap-reboot';
+@import 'fonts';
+@import 'icons';
+@import 'slick';
+@import 'slick-theme';
+
+
+@import 'bootstrap-select/bootstrap-select';
+
+
+[class^="sicon-"]:before, [class*=" sicon-"]:before {
+  font-family: "sinergia";
+  font-style: normal;
+  font-weight: normal;
+  speak: none; 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center; 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none; 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em; 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+

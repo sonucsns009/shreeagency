@@ -5,16 +5,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shree Agency Admin Section.">
+    <meta name="description" content="Deseos Admin Section.">
      
     <link rel="icon" href="<?php echo base_url();?>template/front/images/logo-small.png" type="image/x-icon">
    <!-- <link rel="shortcut icon" href="<?php echo base_url('template/admin/');?>assets/images/dashboard/favicon.png" type="image/x-icon"> -->
     
-	<title>Shree Agency |	<?php echo	$title;?></title>
-	<meta name="keywords" content="Shree Agency Admin Section" />
-	<meta name="description" content="Shree Agency Admin Section">
-	<meta name="author" content="Shree Agency">
-	
+	<title>LOBA | <?php echo	$title;?></title>
+	<meta name="keywords" content="Deseos Admin Section" />
+	<meta name="description" content="Deseos Admin Section">
+	<meta name="author" content="Deseos">
+     <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -43,10 +43,7 @@
 
     <!-- App css-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('template/admin/');?>assets/css/admin.css">
-            <link rel="stylesheet" href="<?php echo base_url('template/admin/');?>assets/css/select2.css" />
-
 	<script type="text/javascript">var BASEPATH="<?php echo base_url('backend/');?>";</script>
-
 	<style>.err_msg{ color:red;}</style>
 </head>
 
@@ -58,8 +55,12 @@
     <!-- Page Header Start-->
     <div class="page-main-header">
         <div class="main-header-right row">
-            <div class="main-header-left d-lg-none">
-                <div class="logo-wrapper"><a href="<?php echo base_url();?>backend/dashboard">					<img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/dashboard/taladdesi.png" alt="" style="width:179px;height:79px;"></a>				</div>
+            <div class="main-header-left d-lg-none" style="background-color: #dddddd;border: solid #75299d 5px;">
+                <div class="logo-wrapper" style="padding: 5px;">
+                   <a href="<?php echo base_url();?>backend/dashboard">
+                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="Deseos logo">
+                    </a>			
+                </div>
             </div>
             <!--<div class="mobile-sidebar">
                 <div class="media-body text-right switch-sm">
@@ -85,16 +86,16 @@
                             <li><a href="#" data-lng="fr"><i class="flag-icon flag-icon-nz"></i> French</a></li>
                         </ul>
                     </li> -->
-                    <li class="onhover-dropdown"><i data-feather="bell"></i><span class="badge badge-pill badge-primary pull-right notification-badge" id="noticount">0</span><span class="dot"></span>
-                        <ul class="notification-dropdown onhover-show-div p-0" id="notification_div">
+                   <!--  <li class="onhover-dropdown"><i data-feather="bell"></i><span class="badge badge-pill badge-primary pull-right notification-badge" id="noticount">0</span><span class="dot"></span>
+                        <ul class="notification-dropdown onhover-show-div p-0" id="notification_div"> -->
                             <!-- <li>Notification <span class="badge badge-pill badge-primary pull-right"></span></li>
                              -->
                                     
                            
                             
                             <!-- <li class="txt-dark"><a href="#">All</a> notification</li> -->
-                        </ul>
-                    </li>
+                      <!--   </ul>
+                    </li> -->
                     <li style="display:none"><a href="#"><i class="right_side_toggle" data-feather="message-square"></i><span class="dot"></span></a></li>
                     <li class="onhover-dropdown">
                         <div class="media align-items-center"><img class="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/avatar.jpg" alt="header-user">
