@@ -4,12 +4,12 @@ class Admin extends CI_Controller {
 	public function __construct()
 	{
 		 parent::__construct();
-		 $this->load->model('adminModel/Admin_model');
+		 $this->load->model('Admin_model');
 		 $this->load->library("pagination");
-		 if(! $this->session->userdata('logged_in'))
+		 /*if(! $this->session->userdata('logged_in'))
 		 {
 			redirect('Login', 'refresh');
-		 }
+		 }*/
 	}
 	// code for manage Admin
 	public function manageAdmin()

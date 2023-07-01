@@ -57,9 +57,7 @@
         <div class="main-header-right row">
             <div class="main-header-left d-lg-none" style="background-color: #dddddd;border: solid #75299d 5px;">
                 <div class="logo-wrapper" style="padding: 5px;">
-                   <a href="<?php echo base_url();?>backend/dashboard">
-                        <img class="blur-up lazyloaded" src="<?php echo base_url('template/admin/');?>assets/images/logos/loba.webp" alt="Deseos logo">
-                    </a>			
+                   			
                 </div>
             </div>
             <!--<div class="mobile-sidebar">
@@ -102,11 +100,11 @@
                             <!--<div class="dotted-animation"><span class="animate-circle"></span><span class="main-circle"></span></div>-->
                         </div>
                         <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-							<li><a href="<?php echo base_url();?>backend/Admin/updateprofile"><i data-feather="user"></i>Update Profile</a></li>
+							<li><a href="<?php echo base_url();?>Admin/updateprofile"><i data-feather="user"></i>Update Profile</a></li>
                            <!--<li><a href="#"><i data-feather="mail"></i>Inbox</a></li>
                             <li><a href="#"><i data-feather="lock"></i>Lock Screen</a></li>
                             <li><a href="#"><i data-feather="settings"></i>Settings</a></li>-->
-                            <li><a href="<?php echo base_url();?>backend/Login/logout"><i data-feather="log-out"></i>Logout</a></li>
+                            <li><a href="<?php echo base_url();?>Login/logout"><i data-feather="log-out"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>

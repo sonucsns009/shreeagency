@@ -89,7 +89,14 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 										<tr>
 												<td><?php echo $i;?></td>
 												<td><?php echo $category['category_name'];?></td>
-												<td><?php if($category['parent_id'] == 0) { echo "---"; } ?></td>
+												<td><?php 
+												$parent_name=$this->db->query("SELECT category_name FROM db_category where id='".$category['parent_id']."'")->row();
+												$parentcategory = '';
+												if(!empty ($parent_name) )
+													$parentcategory = $parent_name->category_name;
+												
+			$parentCat = ($parentcategory) ? ($parentcategory) : "---";
+												echo $parentCat; ?></td>
 												<td><?php echo 
 												($category['status'] == 1) ? 'Active' : 'Inactive';
 
@@ -108,7 +115,7 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 								}
 							} */
 							?>>
-													<a href="<?php echo base_url();?>Brands/updateBrand/<?php echo base64_encode($category['id']);?>"><i data-feather="edit"></i></a>
+													<a href="<?php echo base_url();?>Categories/updateCategory/<?php echo base64_encode($category['id']);?>"><i data-feather="edit"></i></a>
 											</td>				
 											</tr>											
 											<?php $i++; }?>

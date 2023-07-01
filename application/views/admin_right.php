@@ -85,6 +85,36 @@
 						<a class="sidebar-header" href="<?php echo base_url();?>Products/index"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>PRODUCTS</span></a>                        
 					</li>
 					
+					<li <?php if($this->router->fetch_class()=='Transport'){?>style="background-color: rgb(255, 97, 97);"<?php }?>class=" <?php if($this->router->fetch_method()=='index'){?>nav-expanded nav-active <?php }?>" <?php if(isset($modulesId)&& count($modulesId)>0)
+							{ 
+								if ($modulesId[21]['view'] == 'Yes') 
+								{ 
+									echo 'style="display:block;"';
+							    } 
+								else 
+								{ 
+									echo 'style="display:none;"'; 
+								}
+							}
+							?>>
+						<a class="sidebar-header" href="<?php echo base_url();?>Transport/index"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>TRANSPORT</span></a>                        
+					</li>
+					
+					<li <?php if($this->router->fetch_class()=='Supplier'){?>style="background-color: rgb(255, 97, 97);"<?php }?>class=" <?php if($this->router->fetch_method()=='index'){?>nav-expanded nav-active <?php }?>" <?php if(isset($modulesId)&& count($modulesId)>0)
+							{ 
+								if ($modulesId[21]['view'] == 'Yes') 
+								{ 
+									echo 'style="display:block;"';
+							    } 
+								else 
+								{ 
+									echo 'style="display:none;"'; 
+								}
+							}
+							?>>
+						<a class="sidebar-header" href="<?php echo base_url();?>Supplier/index"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>SUPPLIER</span></a>                        
+					</li>
+					
 					<li><a class="sidebar-header" href="<?php echo base_url();?>Login/logout"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/exit.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>LOGOUT</span></a>
                     </li>	
                  </ul>

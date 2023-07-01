@@ -20,11 +20,11 @@ Class Category_model extends CI_Model {
 			return $query->num_rows();
 		}	
 	}
-	public function chkBrandName($brand_name,$res)
+	public function chkCategoryName($category_name,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('brand_name',$brand_name);
-		$query=$this->db->get("brands");
+		$this->db->where('category_name',$category_name);
+		$query=$this->db->get("category");
 		if($res == 1)
 		{
 			return $query->result_array();
@@ -65,35 +65,20 @@ Class Category_model extends CI_Model {
 			return false;
 	}
 	
-	public function insert_brand($input_data) 
+	public function insert_category($input_data) 
 	{
-		$res = $this->db->insert('brands',$input_data);
+		//Create category unique Number
+		$qs4="select coalesce(max(id),0)+1 as maxid from db_category";
+		$q1=$this->db->query($qs4);
+		$maxid=$q1->row()->maxid;
+		$cat_code='CT'.str_pad($maxid, 4, '0', STR_PAD_LEFT);
+		$input_data['category_code'] = $cat_code;
+		//end
+			
+		$res = $this->db->insert('category',$input_data);
 		if($res)
 		{
 			return $this->db->insert_id();
-		}
-		else
-			return false;
-	}
-	
-	public function insert_category_es($input_data) 
-	{
-		//$this->db->where('category_id',$category_id);
-		$res=$this->db->insert(TBPREFIX.'main_category_es',$input_data);
-		if($res)
-		{
-			return $this->db->insert_id();
-		}
-		else
-			return false;
-	}
-	public function upt_category_es($input_data,$category_id) 
-	{
-		$this->db->where('category_id',$category_id);
-		$res=$this->db->update(TBPREFIX.'main_category_es',$input_data);
-		if($res)
-		{
-			return true;
 		}
 		else
 			return false;

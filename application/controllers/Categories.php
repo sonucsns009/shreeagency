@@ -59,102 +59,105 @@ class Categories extends CI_Controller {
 			if($categoryInfo>0)
 			{
 				$data['categoryInfo'] = $this->Category_model->getSingleCategoryInfo($category_id,1);
-				if(isset($_POST['btn_uptbrand']))
+				if(isset($_POST['btn_uptcategory']))
 				{
-					$this->form_validation->set_rules('brand_name','Brand Name','required');
-					$this->form_validation->set_rules('status','Brand Status','required');
+					$this->form_validation->set_rules('category_name','Category Name','required');
+					$this->form_validation->set_rules('status','Category Status','required');
 
 					if($this->form_validation->run())
 					{
-						$brand_name = $this->input->post('brand_name');
+						$category_name = $this->input->post('category_name');
+						$parent_id = $this->input->post('parent_id');
 						$status = $this->input->post('status');
 						$description = $this->input->post('description');
 									
 						$input_data = array(
-								'brand_name'=>trim($brand_name),
+								'category_name'=>trim($category_name),
+								'parent_id'=>trim($parent_id),
 								'status'=>$status,
 								'description'=>addslashes($description)
 								);
 
-						$branddata = $this->Category_model->uptdateBrand($input_data,$brand_id);
+						$categorydata = $this->Category_model->uptdateCategory($input_data,$category_id);
 
-						if($branddata)
+						if($categorydata)
 						{	
-							$this->session->set_flashdata('success','Brand updated successfully.');
+							$this->session->set_flashdata('success','Category updated successfully.');
 
-							redirect(base_url().'backend/Brands/manageBrands');	
+							redirect(base_url().'Categories/index');	
 						}
 						else
 						{
 							$this->session->set_flashdata('error','Error while updating Category.');
 
-							redirect(base_url().'manageBrands/updateBrand/'.base64_encode($brand_id));
+							redirect(base_url().'Categories/updateCategory/'.base64_encode($category_id));
 						}	
 					}
 					else
 					{
 						$this->session->set_flashdata('error',$this->form_validation->error_string());
 
-						redirect(base_url().'manageBrands/updateBrand/'.base64_encode($brand_id));
+						redirect(base_url().'Categories/updateCategory/'.base64_encode($category_id));
 					}
 				}
 			}
 			else
 			{
-				$data['error_msg'] = 'Brand not found.';
+				$data['error_msg'] = 'Category not found.';
 			}
 		}
 		
 		$this->load->view('admin_header',$data);
-		$this->load->view('updateBrand',$data);
+		$this->load->view('updateCategory',$data);
 		$this->load->view('admin_footer');
 	}
 	
-	public function addBrand()
+	public function addCategory()
 	{
-		$data['title']='Add Brand';
+		$data['title']='Add Category';
 		$data['error_msg']='';
 				
 		if(isset($_POST['btn_addcategory']))
 		{
-			$this->form_validation->set_rules('brand_name','Brand Name','required');
-			$this->form_validation->set_rules('status','Brand Status','required');
+			$this->form_validation->set_rules('category_name','Category Name','required');
+			$this->form_validation->set_rules('status','Category Status','required');
 			if($this->form_validation->run())
 			{
-				$brand_name=$this->input->post('brand_name');
-				$status=$this->input->post('status');
+				$category_name = $this->input->post('category_name');
+				$parent_id = $this->input->post('parent_id');
 				$description=$this->input->post('description');
-							
-				$brandname=$this->Brand_model->chkBrandName($brand_name,0);
+				$status = $this->input->post('status');			
+				$catname = $this->Category_model->chkCategoryName($category_name,0);
 
-				if($brandname==0)
+				if($catname == 0)
 				{
 					$input_data = array(
-						'brand_name'=>trim($brand_name),
+						'category_name'=>trim($category_name),
+						'parent_id'=>$parent_id,
 						'status'=>$status,
 						'description'=>addslashes($description)
 						);
 
-					$brand_id=$this->Category_model->insert_category($input_data);
+					$category_id=$this->Category_model->insert_category($input_data);
 					
-					if($brand_id)
+					if($category_id)
 					{	
-						$this->session->set_flashdata('success','Brand added successfully.');
+						$this->session->set_flashdata('success','Category added successfully.');
 
-						redirect(base_url().'Brand/manageBrands');	
+						redirect(base_url().'Categories/index');	
 					}
 					else
 					{
-						$this->session->set_flashdata('error','Error while adding Brand.');
+						$this->session->set_flashdata('error','Error while adding category.');
 
-						redirect(base_url().'Brand/addBrand/'.base64_encode($brand_id));
+						redirect(base_url().'Categories/addCategory');
 					}	
 				}
 				else
 				{
-					$this->session->set_flashdata('success','Brand name is already exist.');
+					$this->session->set_flashdata('success','Category name already exist.');
 
-					redirect(base_url().'Brand/addBrand');	
+					redirect(base_url().'Categories/addCategory');	
 				}
 
 			}
@@ -167,7 +170,7 @@ class Categories extends CI_Controller {
 		}
 
 		$this->load->view('admin_header',$data);
-		$this->load->view('addBrand',$data);
+		$this->load->view('addCategory',$data);
 		$this->load->view('admin_footer');
 	}
 }
