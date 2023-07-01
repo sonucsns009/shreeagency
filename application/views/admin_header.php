@@ -5,15 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Deseos Admin Section.">
+    <meta name="description" content="Shree Agency Admin Section.">
      
     <link rel="icon" href="<?php echo base_url();?>template/front/images/logo-small.png" type="image/x-icon">
    <!-- <link rel="shortcut icon" href="<?php echo base_url('template/admin/');?>assets/images/dashboard/favicon.png" type="image/x-icon"> -->
     
-	<title>LOBA | <?php echo	$title;?></title>
-	<meta name="keywords" content="Deseos Admin Section" />
-	<meta name="description" content="Deseos Admin Section">
-	<meta name="author" content="Deseos">
+	<title>Shree Agency | <?php echo	$title;?></title>
+	<meta name="keywords" content="Shree Agency Admin Section" />
+	<meta name="description" content="Shree Agency Admin Section">
+	<meta name="author" content="Shree Agency">
      <meta http-equiv="Content-Type" content="text/html;charset=ISO-8859-1">
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -117,4 +117,4 @@
     <!-- Page Header Ends -->
 	<!-- Page Body Start-->
     <div class="page-body-wrapper">
-	<?php 	$this->load->view('admin/admin_right'); ?>
+	<?php 	$this->load->view('admin_right'); ?>

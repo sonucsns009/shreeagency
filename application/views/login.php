@@ -5,14 +5,14 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Deseos Admin Section.">
+    <meta name="description" content="Shree Agency Admin Section.">
 	
     <link rel="icon" href="<?php echo base_url();?>template/front/images/logo-small.png" type="image/x-icon">
     <!--<link rel="shortcut icon" href="<?php echo base_url('template/admin/');?>assets/images/dashboard/favicon.png" type="image/x-icon">-->
-    <title>Deseos |	Login</title>
-	<meta name="keywords" content="Deseos Admin Section" />
-	<meta name="description" content="Deseos Admin Section">
-	<meta name="author" content="Deseos">
+    <title>Shree Agency |	Login</title>
+	<meta name="keywords" content="Shree Agency Admin Section" />
+	<meta name="description" content="Shree Agency Admin Section">
+	<meta name="author" content="Shree Agency">
 	
 
     <!-- Google font-->
@@ -42,20 +42,20 @@
 <body>
 
 <!-- page-wrapper Start-->
-<div class="page-wrapper" style="background-image:url('https://deseos.csns.in/template/admin/assets/images/login-bg.jpg'); ">
+<div class="page-wrapper">
     <div class="authentication-box">
         <div class="container">
             <div class="row">
                 <div class="col-md-5 p-0 card-left">
                     <div class="card bg-primary bg-color">
                         <div class="svg-icon" style="padding: 16px !important;">
-                            <img class="blur-up lazyloaded" src="https://deseos.csns.in/template/admin/assets/images/dashboard/logo-white.png" alt="" style="width:230px;height:183px;">
+                            
                         </div>
 
                         <div class="single-item">
                             <div>
                                 <div>
-                                    <h3>Welcome to Deseos</h3>
+                                    <h3>Welcome to Shree Agency</h3>
                                 </div>
                             </div>
                             
@@ -75,7 +75,8 @@
                             </ul>
                             <div class="tab-content" id="top-tabContent">
                                 <div class="tab-pane fade show active" id="top-profile" role="tabpanel" aria-labelledby="top-profile-tab">
-                                    <form name="frm_login" id="frm_login" method="post">																											
+                                     <form action="<?php echo $base_url; ?>login/verify" method="post" id="login">
+										<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
 									<?php if($this->session->flashdata('success')!=""){?>						
 									<div class="alert alert-success">							
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>	
@@ -98,8 +99,9 @@
 									<div class="form-group">	
 										<!--<input type="hidden" name="user_type" id="user_type" value="Admin" />-->
 									 <select name="user_type" id="user_type" required class="form-control">	
-									<option value="Admin">Admin</option>	
-									<option value="Subadmin">Subadmin</option>			
+									<option value="Admin">Admin</option>
+									<option value="Accountant">Accountant</option>			
+									<option value="Manager">Manager</option>
 									</select>
 									</div>	
                                     <div class="form-group">
