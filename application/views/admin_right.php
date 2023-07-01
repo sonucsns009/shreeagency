@@ -112,7 +112,7 @@
 								}
 							}
 							?>>
-						<a class="sidebar-header" href="<?php echo base_url();?>Supplier/index"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>SUPPLIER</span></a>                        
+						<a class="sidebar-header" href="<?php echo base_url();?>Suppliers/index"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/Banners .png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>SUPPLIERS</span></a>                        
 					</li>
 					
 					<li><a class="sidebar-header" href="<?php echo base_url();?>Login/logout"><!-- <i data-feather="home"></i> --><img src="<?php echo base_url()."/uploads/flaticon/exit.png"?>" style="max-height: 25px;max-width: 25px;">  &nbsp;&nbsp;<span>LOGOUT</span></a>
