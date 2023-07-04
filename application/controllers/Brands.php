@@ -47,7 +47,62 @@ class Brands extends CI_Controller {
 		$this->load->view('manageBrands',$data);
 		$this->load->view('admin_footer');
 	}
+	
+	public function addBrand()
+	{
+		$data['title']='Add Brand';
+		$data['error_msg']='';
+				
+		if(isset($_POST['btn_addbrand']))
+		{
+			$this->form_validation->set_rules('brand_name','Brand Name','required');
+			$this->form_validation->set_rules('status','Brand Status','required');
+			if($this->form_validation->run())
+			{
+				$brand_name=$this->input->post('brand_name');
+				$status=$this->input->post('status');
+				$description=$this->input->post('description');
+							
+				$brandname=$this->Brand_model->chkBrandName($brand_name,0);
 
+				if($brandname==0)
+				{
+					$input_data = array(
+						'brand_name'=>trim($brand_name),
+						'status'=>$status,
+						'description'=>addslashes($description)
+						);
+
+					$brand_id = $this->Brand_model->insert_brand($input_data);
+					
+					if($brand_id)
+					{	
+						$this->session->set_flashdata('success','Brand added successfully.');
+
+						redirect(base_url().'Brands/index');	
+					}
+					else
+					{
+						$this->session->set_flashdata('error','Error while adding Brand.');
+
+						redirect(base_url().'Brands/addBrand/');
+					}	
+				}
+				else
+				{
+					$this->session->set_flashdata('success','Brand name is already exist.');
+
+					redirect(base_url().'Brands/addBrand');	
+				}
+
+			}
+		}
+
+		$this->load->view('admin_header',$data);
+		$this->load->view('addBrand',$data);
+		$this->load->view('admin_footer');
+	}
+	
 	public function updateBrand()
 	{
 		$data['title']='Update Brand';
@@ -107,61 +162,6 @@ class Brands extends CI_Controller {
 		
 		$this->load->view('admin_header',$data);
 		$this->load->view('updateBrand',$data);
-		$this->load->view('admin_footer');
-	}
-	
-	public function addBrand()
-	{
-		$data['title']='Add Brand';
-		$data['error_msg']='';
-				
-		if(isset($_POST['btn_addbrand']))
-		{
-			$this->form_validation->set_rules('brand_name','Brand Name','required');
-			$this->form_validation->set_rules('status','Brand Status','required');
-			if($this->form_validation->run())
-			{
-				$brand_name=$this->input->post('brand_name');
-				$status=$this->input->post('status');
-				$description=$this->input->post('description');
-							
-				$brandname=$this->Brand_model->chkBrandName($brand_name,0);
-
-				if($brandname==0)
-				{
-					$input_data = array(
-						'brand_name'=>trim($brand_name),
-						'status'=>$status,
-						'description'=>addslashes($description)
-						);
-
-					$brand_id = $this->Brand_model->insert_brand($input_data);
-					
-					if($brand_id)
-					{	
-						$this->session->set_flashdata('success','Brand added successfully.');
-
-						redirect(base_url().'Brands/index');	
-					}
-					else
-					{
-						$this->session->set_flashdata('error','Error while adding Brand.');
-
-						redirect(base_url().'Brands/addBrand/');
-					}	
-				}
-				else
-				{
-					$this->session->set_flashdata('success','Brand name is already exist.');
-
-					redirect(base_url().'Brands/addBrand');	
-				}
-
-			}
-		}
-
-		$this->load->view('admin_header',$data);
-		$this->load->view('addBrand',$data);
 		$this->load->view('admin_footer');
 	}
 	

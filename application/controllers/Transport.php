@@ -47,114 +47,60 @@ class Transport extends CI_Controller {
 		$this->load->view('manageTransport',$data);
 		$this->load->view('admin_footer');
 	}
-
-	public function updateTransport()
-	{
-		$data['title']='Update Transport';
-		$data['error_msg']='';
-		$brand_id=base64_decode($this->uri->segment(3));
-		if($brand_id)
-		{
-			$brandInfo=$this->Brand_model->getSingleBrandInfo($brand_id,0);
-			if($brandInfo>0)
-			{
-				$data['BrandInfo'] = $this->Brand_model->getSingleBrandInfo($brand_id,1);
-				if(isset($_POST['btn_uptbrand']))
-				{
-					$this->form_validation->set_rules('brand_name','Brand Name','required');
-					$this->form_validation->set_rules('status','Brand Status','required');
-
-					if($this->form_validation->run())
-					{
-						$brand_name = $this->input->post('brand_name');
-						$status = $this->input->post('status');
-						$description = $this->input->post('description');
-									
-						$input_data = array(
-								'brand_name'=>trim($brand_name),
-								'status'=>$status,
-								'description'=>addslashes($description)
-								);
-
-						$branddata = $this->Brand_model->uptdateBrand($input_data,$brand_id);
-
-						if($branddata)
-						{	
-							$this->session->set_flashdata('success','Brand updated successfully.');
-
-							redirect(base_url().'Brands/index');	
-						}
-						else
-						{
-							$this->session->set_flashdata('error','Error while updating brand.');
-
-							redirect(base_url().'Brands/updateBrand/'.base64_encode($brand_id));
-						}	
-					}
-					else
-					{
-						$this->session->set_flashdata('error',$this->form_validation->error_string());
-
-						redirect(base_url().'Brands/updateBrand/'.base64_encode($brand_id));
-					}
-				}
-			}
-			else
-			{
-				$data['error_msg'] = 'Brand not found.';
-			}
-		}
-		
-		$this->load->view('admin_header',$data);
-		$this->load->view('updateTransport',$data);
-		$this->load->view('admin_footer');
-	}
 	
 	public function addTransport()
 	{
 		$data['title']='Add Transport';
 		$data['error_msg']='';
 				
-		if(isset($_POST['btn_addbrand']))
+		if(isset($_POST['btn_addtrans']))
 		{
-			$this->form_validation->set_rules('brand_name','Brand Name','required');
-			$this->form_validation->set_rules('status','Brand Status','required');
+			$this->form_validation->set_rules('transport_name','Transport Name','required');
+			$this->form_validation->set_rules('status','Transport Status','required');
 			if($this->form_validation->run())
 			{
-				$brand_name=$this->input->post('brand_name');
-				$status=$this->input->post('status');
-				$description=$this->input->post('description');
-							
-				$brandname=$this->Brand_model->chkBrandName($brand_name,0);
+				$transport_name = $this->input->post('transport_name');
+				
+				$transportName = $this->Transport_model->chkTransportName($transport_name,0);
 
-				if($brandname==0)
+				if($transportName==0)
 				{
 					$input_data = array(
-						'brand_name'=>trim($brand_name),
-						'status'=>$status,
-						'description'=>addslashes($description)
-						);
+						'transport_name'=>trim($transport_name),
+						'mobile' => $this->input->post('mobile'),
+						'phone' => $this->input->post('phone'),
+						'email' => $this->input->post('email'),
+						'address' => $this->input->post('address'),
+						'postcode' => $this->input->post('postcode'),
+						'vehicle_number' => $this->input->post('vehicle_number'),
+						'gst_number' => $this->input->post('gst_number'),
+						'charges' => $this->input->post('charges'),
+						'created_date' => date('Y-m-d'),
+						'created_time' => date('H:i:s'),
+						'created_by' => '',
+						'status' => $this->input->post('status')
+					);
 
-					$brand_id = $this->Brand_model->insert_brand($input_data);
+					$transport_id = $this->Transport_model->insert_transport($input_data);
 					
-					if($brand_id)
+					if($transport_id)
 					{	
-						$this->session->set_flashdata('success','Brand added successfully.');
+						$this->session->set_flashdata('success','Transport added successfully.');
 
-						redirect(base_url().'Brands/index');	
+						redirect(base_url().'Transport/index');	
 					}
 					else
 					{
-						$this->session->set_flashdata('error','Error while adding Brand.');
+						$this->session->set_flashdata('error','Error while adding Transport.');
 
-						redirect(base_url().'Brands/addBrand/');
+						redirect(base_url().'Transport/addTransport');
 					}	
 				}
 				else
 				{
-					$this->session->set_flashdata('success','Brand name is already exist.');
+					$this->session->set_flashdata('success','Transport name is already exist.');
 
-					redirect(base_url().'Brands/addBrand');	
+					redirect(base_url().'Transport/addTransport');	
 				}
 
 			}
@@ -165,36 +111,104 @@ class Transport extends CI_Controller {
 		$this->load->view('admin_footer');
 	}
 	
-	public function deleteTransport()
+	public function updateTransport()
 	{
+		$data['title']='Update Transport';
 		$data['error_msg']='';
-		$brand_id = base64_decode($this->uri->segment(3));
-		if($brand_id)
+		$transport_id=base64_decode($this->uri->segment(3));
+		if($transport_id)
 		{
-			$brandInfo = $data['brandInfo'] = $this->Brand_model->getSingleBrandInfo($brand_id,1);
-			if(count($brandInfo) > 0)
+			$transportInfo=$this->Transport_model->getSingleTransportInfo($transport_id,0);
+			if($transportInfo > 0)
 			{
-				$delbrand=$this->Brand_model->deleteBrand($brand_id);
-				if($delbrand > 0)
+				$data['TransportInfo'] = $this->Transport_model->getSingleTransportInfo($transport_id,1);
+				
+				if(isset($_POST['frm_updtrans']))
 				{
-					$this->session->set_flashdata('success','Brand deleted successfully.');
-					redirect(base_url().'Brands/index');	
-				}
-				else
-				{
-					$this->session->set_flashdata('error','Error while deleting brand.');
-					redirect(base_url().'Brands/index');
+					$this->form_validation->set_rules('transport_name','Transport Name','required');
+					//print_r($this->form_validation);exit;
+					if ($this->form_validation->run() == TRUE) 
+					{
+						echo "<pre>"; print_r($_POST);exit;
+						$transport_name = $this->input->post('transport_name');
+									
+						$input_data = array(
+								'transport_name'=>trim($transport_name),
+								'mobile' => $this->input->post('mobile'),
+								'phone' => $this->input->post('phone'),
+								'email' => $this->input->post('email'),
+								'address' => $this->input->post('address'),
+								'postcode' => $this->input->post('postcode'),
+								'vehicle_number' => $this->input->post('vehicle_number'),
+								'gst_number' => $this->input->post('gst_number'),
+								'charges' => $this->input->post('charges'),
+								'status' => $this->input->post('status')
+							);
+
+						$transdata = $this->Transport_model->uptdateTransport($input_data,$transport_id);
+
+						if($transdata)
+						{	
+							$this->session->set_flashdata('success','Transport updated successfully.');
+
+							redirect(base_url().'Transport/index');	
+						}
+						else
+						{
+							$this->session->set_flashdata('error','Error while updating transport.');
+
+							redirect(base_url().'Transport/updateTransport/'.base64_encode($transport_id));
+						}	
+					}
+					else
+					{
+						$this->session->set_flashdata('error',$this->form_validation->error_string());
+
+						redirect(base_url().'Transport/updateTransport/'.base64_encode($transport_id));
+					}
 				}
 			}
 			else
 			{
-				$data['error_msg'] = 'Brand not found.';
+				$data['error_msg'] = 'Transport not found.';
+			}
+		}
+		
+		$this->load->view('admin_header',$data);
+		$this->load->view('updateTransport',$data);
+		$this->load->view('admin_footer');
+	}
+	
+	public function deleteTransport()
+	{
+		$data['error_msg']='';
+		$transport_id = base64_decode($this->uri->segment(3));
+		if($transport_id)
+		{
+			$transportInfo = $data['transportInfo'] = $this->Transport_model->getSingleTransportInfo($transport_id,1);
+			if(count($transportInfo) > 0)
+			{
+				$deltrans=$this->Transport_model->deleteTransport($transport_id);
+				if($deltrans > 0)
+				{
+					$this->session->set_flashdata('success','Transport deleted successfully.');
+					redirect(base_url().'Transport/index');	
+				}
+				else
+				{
+					$this->session->set_flashdata('error','Error while deleting transport.');
+					redirect(base_url().'Transport/index');
+				}
+			}
+			else
+			{
+				$data['error_msg'] = 'Transport not found.';
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('error','Brand not found.');
-			redirect(base_url().'Brands/index');
+			$this->session->set_flashdata('error','Transport not found.');
+			redirect(base_url().'Transport/index');
 		}
 	}
 }

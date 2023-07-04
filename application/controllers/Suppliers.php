@@ -48,20 +48,75 @@ class Suppliers extends CI_Controller {
 		$this->load->view('admin_footer');
 	}
 
+	public function addSupplier()
+	{
+		$data['title']='Add Supplier';
+		$data['error_msg']='';
+				
+		if(isset($_POST['btn_addbrand']))
+		{
+			$this->form_validation->set_rules('brand_name','Brand Name','required');
+			$this->form_validation->set_rules('status','Brand Status','required');
+			if($this->form_validation->run())
+			{
+				$brand_name=$this->input->post('brand_name');
+				$status=$this->input->post('status');
+				$description=$this->input->post('description');
+							
+				$brandname=$this->Supplier_model->chkBrandName($brand_name,0);
+
+				if($brandname==0)
+				{
+					$input_data = array(
+						'brand_name'=>trim($brand_name),
+						'status'=>$status,
+						'description'=>addslashes($description)
+						);
+
+					$brand_id = $this->Brand_model->insert_brand($input_data);
+					
+					if($brand_id)
+					{	
+						$this->session->set_flashdata('success','Brand added successfully.');
+
+						redirect(base_url().'Brands/index');	
+					}
+					else
+					{
+						$this->session->set_flashdata('error','Error while adding Brand.');
+
+						redirect(base_url().'Brands/addBrand/');
+					}	
+				}
+				else
+				{
+					$this->session->set_flashdata('success','Brand name is already exist.');
+
+					redirect(base_url().'Brands/addBrand');	
+				}
+
+			}
+		}
+
+		$this->load->view('admin_header',$data);
+		$this->load->view('addSupplier',$data);
+		$this->load->view('admin_footer');
+	}
+	
 	public function updateSupplier()
 	{
 		$data['title']='Update Supplier';
 		$data['error_msg']='';
-		$brand_id=base64_decode($this->uri->segment(3));
-		if($brand_id)
+		$supplier_id = base64_decode($this->uri->segment(3));
+		if($supplier_id)
 		{
-			$brandInfo=$this->Brand_model->getSingleBrandInfo($brand_id,0);
-			if($brandInfo>0)
+			$supplierInfo=$this->Supplier_model->getSingleSupplierInfo($supplier_id,0);
+			if($supplierInfo>0)
 			{
-				$data['BrandInfo'] = $this->Brand_model->getSingleBrandInfo($brand_id,1);
+				$data['SupplierInfo'] = $this->Supplier_model->getSingleSupplierInfo($supplier_id,1);
 				if(isset($_POST['btn_uptbrand']))
 				{
-					$this->form_validation->set_rules('brand_name','Brand Name','required');
+					$this->form_validation->set_rules('supplier_name','Supplier Name','required');
 					$this->form_validation->set_rules('status','Brand Status','required');
 
 					if($this->form_validation->run())
@@ -107,61 +162,6 @@ class Suppliers extends CI_Controller {
 		
 		$this->load->view('admin_header',$data);
 		$this->load->view('updateSupplier',$data);
-		$this->load->view('admin_footer');
-	}
-	
-	public function addSupplier()
-	{
-		$data['title']='Add Supplier';
-		$data['error_msg']='';
-				
-		if(isset($_POST['btn_addbrand']))
-		{
-			$this->form_validation->set_rules('brand_name','Brand Name','required');
-			$this->form_validation->set_rules('status','Brand Status','required');
-			if($this->form_validation->run())
-			{
-				$brand_name=$this->input->post('brand_name');
-				$status=$this->input->post('status');
-				$description=$this->input->post('description');
-							
-				$brandname=$this->Brand_model->chkBrandName($brand_name,0);
-
-				if($brandname==0)
-				{
-					$input_data = array(
-						'brand_name'=>trim($brand_name),
-						'status'=>$status,
-						'description'=>addslashes($description)
-						);
-
-					$brand_id = $this->Brand_model->insert_brand($input_data);
-					
-					if($brand_id)
-					{	
-						$this->session->set_flashdata('success','Brand added successfully.');
-
-						redirect(base_url().'Brands/index');	
-					}
-					else
-					{
-						$this->session->set_flashdata('error','Error while adding Brand.');
-
-						redirect(base_url().'Brands/addBrand/');
-					}	
-				}
-				else
-				{
-					$this->session->set_flashdata('success','Brand name is already exist.');
-
-					redirect(base_url().'Brands/addBrand');	
-				}
-
-			}
-		}
-
-		$this->load->view('admin_header',$data);
-		$this->load->view('addSupplier',$data);
 		$this->load->view('admin_footer');
 	}
 	

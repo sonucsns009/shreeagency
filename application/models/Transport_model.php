@@ -6,11 +6,11 @@ Class Transport_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function getSingleBrandInfo($brand_id,$res)
+	public function getSingleTransportInfo($transport_id,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('id',$brand_id);
-		$query = $this->db->get("brands");
+		$this->db->where('id',$transport_id);
+		$query = $this->db->get("transport");
 		if($res == 1)
 		{
 			return $query->result_array();
@@ -20,11 +20,11 @@ Class Transport_model extends CI_Model {
 			return $query->num_rows();
 		}	
 	}
-	public function chkBrandName($brand_name,$res)
+	public function chkTransportName($transport_name,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('brand_name',$brand_name);
-		$query=$this->db->get("brands");
+		$this->db->where('transport_name',$transport_name);
+		$query=$this->db->get("transport");
 		if($res == 1)
 		{
 			return $query->result_array();
@@ -53,16 +53,17 @@ Class Transport_model extends CI_Model {
 
 	}
 	
-	public function uptdateBrand($input_data,$brand_id) 
+	public function uptdateTransport($input_data,$transport_id) 
 	{
-		$brand = $input_data['brand_name'];
-		$query=$this->db->query("select * from db_brands where upper(brand_name)=upper('$brand') and id<>$brand_id");
+		$transport = $input_data['transport_name'];
+		$query=$this->db->query("select * from db_transport where upper(transport_name)=upper('$transport') and id<>$transport_id");
 		if($query->num_rows()>0){
 			return false;
 		}
 		else {
-			$this->db->where('id',$brand_id);
-			$res = $this->db->update('brands',$input_data);
+			print_r($input_data);exit;
+			$this->db->where('id',$transport_id);
+			$res = $this->db->update('transport',$input_data);
 			if($res)
 			{
 				return true;
@@ -72,9 +73,9 @@ Class Transport_model extends CI_Model {
 		}
 	}
 	
-	public function insert_brand($input_data) 
+	public function insert_transport($input_data) 
 	{
-		$res = $this->db->insert('brands',$input_data);
+		$res = $this->db->insert('transport',$input_data);
 		if($res)
 		{
 			return $this->db->insert_id();
@@ -83,10 +84,10 @@ Class Transport_model extends CI_Model {
 			return false;
 	}
 	
-	public function deleteBrand($brand_id)
+	public function deleteTransport($transport_id)
 	{
-		$this->db->where('id',$brand_id);
-		$res = $this->db->delete('brands');
+		$this->db->where('id',$transport_id);
+		$res = $this->db->delete('transport');
 		if($res)
 			return true;
 		else

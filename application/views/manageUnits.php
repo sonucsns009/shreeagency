@@ -15,6 +15,7 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 ?>
 <div class="page-body">
 	<!-- Container-fluid starts-->
+	
 	<div class="container-fluid">
 		<!-- Container-fluid starts-->
 	<div class="container-fluid">
@@ -22,16 +23,17 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 			<div class="col-sm-12">
 				<div class="card">
 					<div class="card-header">
-						<h5>BRANDS LISTING</h5>			
+						<h5>UNITS LISTING</h5>			
 						<div class="card-header-right">
 						<div class="row">
 							<div class="col-lg-12">
-								<a class="btn btn-primary"  href="<?php echo base_url();?>Brands/addBrand" style="float:right">Add Brand</a>
+								<a class="btn btn-primary"  href="<?php echo base_url();?>Units/addUnit" style="float:right">Add Unit</a>
 							</div>
 							</div>
 						</div>	 
 					</div>
 					<div class="card-body">
+					
 						<?php if($this->session->flashdata('success')!=""){?>
 						<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -51,14 +53,19 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 							<?php echo $this->session->flashdata('error_msg');?>
 						</div>
 						<?php }?>										
+																
+					
+						
 						<div class="table-responsive">
 							<div id="basicScenario" class="product-physical"></div>
-							<?php if($brandcnt > 0)	{ ?>
-								<table class="table table-bordered table-striped mb-0" id="datatable-default">
+							<?php if($unitcnt>0)									
+							{
+							?>										
+								<table class="table table-bordered table-striped mb-0" id="datatable-default">										
 									<thead>
-										<tr>
+										<tr>												
 											<th>Sr.No</th>	
-											<th>Brand Name</th>
+											<th>Unit Name</th>
 											<th>Status</th>
 											<th <?php /*if(isset($modulesId)&& count($modulesId)>0)
 							{ 
@@ -72,18 +79,17 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 								}
 							}*/
 							?>>Actions</th>	
-										</tr>
-									</thead>	
-									<tbody>			
-										<?php $i=1;
-										foreach($brands as $brand)
-										{
-										?>		
+										</tr>											
+									</thead>											
+									<tbody>											
+										<?php $i=1; 											
+										foreach($units as $unit)
+										{									?>		
 										<tr>
 												<td><?php echo $i;?></td>
-												<td><?php echo $brand['brand_name'];?></td>
+												<td><?php echo $unit['unit_name'];?></td>
 												<td><?php echo 
-												($brand['status'] == 1) ? 'Active' : 'Inactive';
+												($unit['status'] == 1) ? 'Active' : 'Inactive';
 
 												?></td>	
 												<td class="actions" <?php
@@ -100,9 +106,9 @@ if($session_user_type=="Subadmin" && $session_subroles!="NULL")
 								}
 							} */
 							?>>
-													<a href="<?php echo base_url();?>Brands/updateBrand/<?php echo base64_encode($brand['id']);?>"><i data-feather="edit"></i></a>
+													<a href="<?php echo base_url();?>Units/updateUnit/<?php echo base64_encode($unit['id']);?>"><i data-feather="edit"></i></a>
 													
-													<a href="<?php echo base_url();?>Brands/deleteBrand/<?php echo base64_encode($brand['id']);?>" onclick="javascript:return chk_isDeleteComnfirm();">
+													<a href="<?php echo base_url();?>Units/deleteUnit/<?php echo base64_encode($unit['id']);?>" onclick="javascript:return chk_isDeleteComnfirm();">
 													<i data-feather="trash-2"></i>
 													</a>
 											</td>				

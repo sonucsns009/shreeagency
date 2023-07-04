@@ -1,6 +1,4 @@
 <div class="page-body">
-
-
 	<!-- Container-fluid starts-->
 	<div class="container-fluid">
                 <div class="card tab2-card">

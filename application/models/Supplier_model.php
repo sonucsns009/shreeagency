@@ -6,11 +6,11 @@ Class Supplier_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	public function getSingleBrandInfo($brand_id,$res)
+	public function getSingleSupplierInfo($supplier_id,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('id',$brand_id);
-		$query = $this->db->get("brands");
+		$this->db->where('id',$supplier_id);
+		$query = $this->db->get("suppliers");
 		if($res == 1)
 		{
 			return $query->result_array();
