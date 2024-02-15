@@ -6,7 +6,7 @@
                     <div class="col-sm-12">
                         <div class="card tab2-card">
                             <div class="card-header">
-                                <h5> ADD TRANSPORT</h5>
+                                <h5> ADD PRODUCT</h5>
                             </div>
                             <div class="card-body">
 							 <?php if($this->session->flashdata('success')!=""){?>
@@ -35,24 +35,74 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group row">
-                                                <label for="transport_name" class="col-xl-3 col-md-4"><span>*</span>Transport Name</label>
-                                                <input type="text" class="form-control  col-md-6" id="transport_name" name="transport_name" placeholder="Enter Transport Name" required value="">
-												 <div id="err_transport_name" class="error_msg"></div>
+                                                <label for="item_name" class="col-xl-3 col-md-4"><span>*</span>Product Name</label>
+                                                <input type="text" class="form-control  col-md-6" id="item_name" name="item_name" placeholder="Enter Product Name" required value="">
+												 <div id="err_item_name" class="error_msg"></div>
                                             </div>
 											
 											<div class="form-group row">
-                                                <label for="mobile" class="col-xl-3 col-md-4"><span>*</span>Mobile Number</label>
-                                                <input type="text" class="form-control  col-md-6" id="mobile" name="mobile" placeholder="Enter Mobile" required value="">
-												 <div id="err_mobile" class="error_msg"></div>
+                                                <label for="brand_id" class="col-xl-3 col-md-4"><span>*</span>Brand</label>
+                                                <select class="form-control  col-md-6" id="brand_id" name="brand_id"  style="width: 100%;"  >
+                                    <?php
+                                       $query1="select * from db_brands where status=1";
+                                       $q1=$this->db->query($query1);
+                                       if($q1->num_rows($q1)>0)
+                                        {  echo '<option value="">-Select-</option>'; 
+                                            foreach($q1->result() as $res1)
+                                          { 
+                                            $selected = ($brand_id==$res1->id)? 'selected' : '';
+                                            echo "<option $selected value='".$res1->id."'>".$res1->brand_name."</option>";
+                                          }
+                                        }
+                                        else
+                                        {
+                                           ?>
+                                    <option value="">No Records Found</option>
+                                    <?php
+                                       }
+                                       ?>
+                                 </select>
+												 <div id="err_brand_id" class="error_msg"></div>
                                             </div>
 											
 											<div class="form-group row">
-                                                <label for="phone" class="col-xl-3 col-md-4">Phone Number</label>
-                                                <input type="text" class="form-control  col-md-6" id="phone" name="phone" placeholder="Enter Phone"  value="">
+                                                <label for="phone" class="col-xl-3 col-md-4">Category</label>
+                                                <select class="form-control  col-md-6" id="category_id" name="category_id"  style="width: 100%;"  value="<?php print $category_id; ?>">
+                                    <?php
+                                       $query1="select * from db_category where status=1 AND parent_id = 0";
+                                       $q1=$this->db->query($query1);
+                                       if($q1->num_rows($q1)>0)
+                                        {  echo '<option value="">-Select-</option>'; 
+                                            foreach($q1->result() as $res1)
+                                          { 
+                                            $selected = ($category_id==$res1->id)? 'selected' : '';
+                                            echo "<option $selected value='".$res1->id."'>".$res1->category_name."</option>";
+											
+												$query2="select * from db_category where status=1 AND parent_id = ".$res1->id;
+												$q2=$this->db->query($query2);
+												if($q2->num_rows($q2)>0)
+												{   
+													foreach($q2->result() as $res2)
+												  {
+													  $selected = ($category_id==$res2->id)? 'selected' : '';
+														echo "<option $selected value='".$res2->id."'> - ".$res2->category_name."</option>";
+													  
+												  }
+												}
+											}
+                                        }
+                                        else
+                                        {
+                                           ?>
+                                    <option value="">No Records Found</option>
+                                    <?php
+                                       }
+                                       ?>
+                                 </select>
                                             </div>
 											
 											<div class="form-group row">
-                                                <label for="email" class="col-xl-3 col-md-4"><span>*</span>Email Address</label>
+                                                <label for="email" class="col-xl-3 col-md-4"><span>*</span>Unit</label>
                                                 <input type="text" class="form-control  col-md-6" id="email" name="email" placeholder="Enter Email" required value="">
 												 <div id="err_email" class="error_msg"></div>
                                             </div>

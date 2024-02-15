@@ -104,7 +104,7 @@
                            <!--<li><a href="#"><i data-feather="mail"></i>Inbox</a></li>
                             <li><a href="#"><i data-feather="lock"></i>Lock Screen</a></li>
                             <li><a href="#"><i data-feather="settings"></i>Settings</a></li>-->
-                            <li><a href="<?php echo base_url();?>Login/logout"><i data-feather="log-out"></i>Logout</a></li>
+                            <li><a href="<?php echo base_url();?>Logout"><i data-feather="log-out"></i>Logout</a></li>
                         </ul>
                     </li>
                 </ul>

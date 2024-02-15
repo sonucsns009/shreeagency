@@ -1,163 +1,179 @@
 <?php
-Class Login_model extends CI_Model {
+class Login_model extends CI_Model
+{
+	
 	function __construct()
 	{
-		// Call the Model constructor
 		parent::__construct();
 	}
-	
-	// Read data using username and password
-	public function chk_login_username($data) 
+
+	public function verify_credentials($username,$password)
 	{
-		if($data['user_type']=='Admin')
-		{
-			$condition = "username =" . "'" . $data['username'] . "' AND user_type='Admin'";
-						  
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			
-			//echo $this->db->last_query();exit;
-			return $query->num_rows();
+		//Filtering XSS and html escape from user inputs 
+		$username=$this->security->xss_clean(html_escape($username));
+		$password=$this->security->xss_clean(html_escape($password));
+				
+		$query=$this->db->query("select a.id,a.username,a.role_id,b.role_name from db_users a, db_roles b where b.id=a.role_id and  a.username='$username' and a.password='".md5($password)."' and a.status=1");
+		if($query->num_rows()==1){
+
+			$logdata = array('inv_username'  => $query->row()->username,
+				        	 'inv_userid'  => $query->row()->id,
+				        	 'logged_in' => TRUE,
+				        	 'role_id' => $query->row()->role_id,
+				        	 'role_name' => trim($query->row()->role_name),
+				        	);
+			$this->session->set_userdata($logdata);
+			$this->session->set_flashdata('success', 'Welcome '.ucfirst($query->row()->username)." !");
+			return true;
 		}
-		if($data['user_type']=='Subadmin')
-		{
-			$condition = "username =" . "'" . $data['username'] . "' AND user_type='Subadmin' ";
-						  
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			
-			//echo $this->db->last_query();exit;
-			return $query->num_rows();
-		}
+		else{
+			return false;
+		}		
 	}
-
-
-
-	// Read data using username and password
-	public function chk_login($data,$qty) 
+	/*public function verify_email_send_otp($email)
 	{
-		if($data['user_type']=='Admin')
-		{
-			$condition = "username =" . "'" . $data['username'] . "' 	
-						  AND " . "admin_password =" . "'" . md5($data['admin_password']) . "'
-						 AND user_type='Admin'";
-						  
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			
-			//echo $this->db->last_query();exit;
-			if ($qty==0) 
-			{
-				return $query->num_rows();
-			} 
-			else 
-			{
-				return $query->result_array();
-			}
+		$q1=$this->db->query("select email,company_name from db_company where email<>''");
+		if($q1->num_rows()==0){
+			$this->session->set_flashdata('failed', 'Failed to send OTP! Contact admin :(');
+			return false;
+			exit();
 		}
-		else if($data['user_type']=='Subadmin')
-		{
-			$condition = "username =" . "'" . $data['username'] . "' 	
-						AND " . "admin_password =" . "'" . md5($data['admin_password']) . "'AND user_type='Subadmin'";
-						
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			
-			//echo $this->db->last_query();exit;
-			if ($qty==0) 
-			{
-				return $query->num_rows();
-			} 
-			else 
-			{
-				return $query->result_array();
+		//Filtering XSS and html escape from user inputs 
+		$email_id=$this->security->xss_clean(html_escape($email));
+				
+		$query=$this->db->query("select * from db_users where email='$email' and status=1");
+		if($query->num_rows()==1){
+			$otp=rand(1000,9999);
+
+			$server_subject = "OTP for Password Change | OTP: ".$otp;
+			$ready_message="---------------------------------------------------------
+Hello User,
+
+You are requested for Password Change,
+Please enter ".$otp." as a OTP.
+
+Note: Don't share this OTP with anyone.
+Thank you
+---------------------------------------------------------
+		";
+		
+			$this->load->library('email');
+			$this->email->from($q1->row()->email, $q1->row()->company_name);
+			$this->email->to($email_id);
+			$this->email->subject($server_subject);
+			$this->email->message($ready_message);
+
+			if($this->email->send()){
+				//redirect('contact/success');
+				$this->session->set_flashdata('success', 'OTP has been sent to your email ID!');
+				$otpdata = array('email'  => $email,'otp'  => $otp );
+				$this->session->set_userdata($otpdata);
+				//echo "Email Sent";
+				return true;
 			}
-		}
-	}
-
-
-
-// Read  data from database to show data in admin page
-
-	public function read_user_information($username) 
-	{
-			$condition = "user_name =" . "'" . $username . "'";
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			if ($query->num_rows() == 1) 
-			{
-				return $query->result();
-			} 
-			else 
-			{
+			else{
+				//echo "Failed to Send Message.Try again!";
 				return false;
 			}
-	}
-	public function resetPass($new_password,$admin_email)
-	{
-		$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($new_password).'" WHERE admin_email="'.$admin_email.'"');
-		return $sts;
-	}
-	public function checkexist($email)
-	{
-		$query = $this->db->query('select admin_id from '.TBPREFIX.'admin where admin_email="'.$email.'"');
-		return $query->result_array();
-	}
-	
-	public function chkAdminEmailExists($admin_email,$user_type) 
-	{
-		if($user_type=='Admin')
-		{
-			$condition = " admin_email='".$admin_email."' AND user_type='Admin'";
-						  
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			return $query->result_array();
 		}
-		else if($user_type=='Subadmin')
-		{
-			$condition = "admin_email =" . "'" . $admin_email . "' AND user_type='Subadmin'";
-						
-			$this->db->select('*');
-			$this->db->from(TBPREFIX.'admin');
-			$this->db->where($condition);
-			$this->db->limit(1);
-			$query = $this->db->get();
-			return $query->result_array();
-		}
-	}
-	
-	public function upadteAdminPassword($user_type,$admin_email,$rnd_number)
+		else{
+			return false;
+		}		
+	}*/
+
+	public function verify_email_send_otp($email)
 	{
-		if($user_type=='Admin')
-		{
-			$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
-							WHERE admin_email="'.$admin_email.'"');
-			return $sts;
+		
+		//Filtering XSS and html escape from user inputs 
+		$email_id=$this->security->xss_clean(html_escape($email));
+				
+		$query=$this->db->query("select * from db_users where email='$email' and status=1");
+		if($query->num_rows()==1){
+			
+
+			$q1=$this->db->query("select email,store_name from db_company where id=1");
+			
+			$otp=rand(1000,9999);
+
+			$server_subject = "OTP for Password Change | OTP: ".$otp;
+			$ready_message="---------------------------------------------------------
+Hello User,
+
+You are requested for Password Change,
+Please enter ".$otp." as a OTP.
+
+Note: Don't share this OTP with anyone.
+Thank you
+---------------------------------------------------------
+		";
+		
+			/*$this->load->library('email');
+			$this->email->from($q1->row()->email, $q1->row()->store_name);
+			$this->email->to($email_id);
+			$this->email->subject($server_subject);
+			$this->email->message($ready_message);*/
+			
+			//if($this->email->send()){
+			if(mail($email_id, $server_subject, $ready_message)){
+				//redirect('contact/success');
+				$this->session->set_flashdata('success', 'OTP has been sent to your email ID! (Check Inbox/Spam Box)');
+				$otpdata = array('email'  => $email_id,'otp'  => $otp );
+				$this->session->set_userdata($otpdata);
+				//echo "Email Sent";
+				return true;
+			}
+			else{
+				//echo "Failed to Send Message.Try again!";
+				$this->session->set_flashdata('failed', 'Failed to Send Message.Try again!');
+				return false;
+			}
 		}
-		if($user_type=='Subadmin')
-		{
-			$sts = $this->db->query('Update '.TBPREFIX.'admin SET admin_password ="'.md5($rnd_number).'" 
-							WHERE admin_email="'.$admin_email.'"');
-			return $sts;
-		}
+		else{
+			$this->session->set_flashdata('failed', 'This Email ID not Exist in Our Records!');
+			return false;
+		}		
 	}
+
+	public function verify_otp($otp)
+	{
+		//Filtering XSS and html escape from user inputs 
+		$otp=$this->security->xss_clean(html_escape($otp));
+		$email=$this->security->xss_clean(html_escape($email));
+		if($this->session->userdata('email')==$email){ redirect(base_url().'logout','refresh');	}
+				
+		$query=$this->db->query("select * from db_users where username='$username' and password='".md5($password)."' and status=1");
+		if($query->num_rows()==1){
+
+			$logdata = array('inv_username'  => $query->row()->username,
+				        	 'inv_userid'  => $query->row()->id,
+				        	 'logged_in' => TRUE 
+				        	);
+			$this->session->set_userdata($logdata);
+			return true;
+		}
+		else{
+			return false;
+		}		
+	}
+	public function change_password($password,$email){
+			$query=$this->db->query("select * from db_users where email='$email' and status=1");
+			if($query->num_rows()==1){
+				/*if($query->row()->username == 'admin'){
+					echo "Restricted Admin Password Change";exit();
+				}*/
+				$password=md5($password);
+				$query1="update db_users set password='$password' where email='$email'";
+				if ($this->db->simple_query($query1)){
+
+				        return true;
+				}
+				else{
+				        return false;
+				}
+			}
+			else{
+				return false;
+				}
+
+		}
 }

@@ -97,7 +97,7 @@
                                 
                             </div>
                         </div>
-                        <div class="pull-right">
+                        <div class="pull-left">
                             <button type="submit" class="btn btn-primary" name="btn_addcategory" id="btn_addcategory">Add</button>
 							<a href="<?php echo base_url();?>Categories/index" class="btn btn-primary" >Cancel</a>
                         </div>

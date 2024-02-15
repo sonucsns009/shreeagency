@@ -3,7 +3,7 @@
 	<div class="container-fluid">
                 <div class="card tab2-card">
                     <div class="card-header">
-                        <h5>Update Brand</h5>
+                        <h5>Update Role</h5>
                     </div>
                     <div class="card-body">
                       <?php if($this->session->flashdata('success')!=""){?>
@@ -31,21 +31,21 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group row">
-                                                <label for="brand_name" class="col-xl-3 col-md-4"><span></span>Brand</label>
-                                                <input type="text" class="form-control  col-md-6" id="brand_name" name="brand_name" placeholder="Enter Brand" required value="<?php echo $BrandInfo[0]['brand_name'];?>">
-												 <div id="err_brand_name" class="error_msg"></div>
+                                                <label for="role_name" class="col-xl-3 col-md-4"><span></span>Role</label>
+                                                <input type="text" class="form-control  col-md-6" id="role_name" name="role_name" placeholder="Enter Role" required value="<?php echo $RoleInfo[0]['role_name'];?>">
+												 <div id="err_role_name" class="error_msg"></div>
                                             </div>
 											<div class="form-group row">
                                                 <label for="description" class="col-xl-3 col-md-4"><span>*</span> Description</label>
-                                               <textarea name="description" id="description" class="form-control  col-md-6"><?php echo $BrandInfo[0]['description'];?></textarea>
+                                               <textarea name="description" id="description" class="form-control  col-md-6"><?php echo $RoleInfo[0]['description'];?></textarea>
                                             </div>
 											
                                             <div class="form-group row">
                                                 <label class="col-xl-3 col-md-4"><span></span>Status</label>
 												<select name="status" id="status" class="form-control  col-md-3" required>
 													<option value="">Select Status</option>
-													<option value="1" <?php if($BrandInfo[0]['status']=="1"){ echo 'selected="selected"';}?>>Active</option>
-													<option value="0" <?php if($BrandInfo[0]['status']=="0"){ echo 'selected="selected"';}?>>Inactive</option>
+													<option value="1" <?php if($RoleInfo[0]['status']=="1"){ echo 'selected="selected"';}?>>Active</option>
+													<option value="0" <?php if($RoleInfo[0]['status']=="0"){ echo 'selected="selected"';}?>>Inactive</option>
 												</select>
                                             </div>
                                         </div>
@@ -53,8 +53,8 @@
                             </div>
                         </div>
                         <div class="pull-left">
-                            <button type="submit" class="btn btn-primary" name="btn_uptbrand" id="btn_uptbrand">Update</button>
-							<a href="<?php echo base_url();?>Brands/index" class="btn btn-primary" >Cancel</a>
+                            <button type="submit" class="btn btn-primary" name="btn_uptrole" id="btn_uptrole">Update</button>
+							<a href="<?php echo base_url();?>Roles/index" class="btn btn-primary" >Cancel</a>
                         </div>
 						</form>
                     </div>

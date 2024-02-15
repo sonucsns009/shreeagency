@@ -99,7 +99,7 @@
                                 
                             </div>
                         </div>
-                        <div class="pull-right">
+                        <div class="pull-left">
                             <button type="submit" class="btn btn-primary" name="btn_upttrans" id="btn_upttrans">Update</button>
 							<a href="<?php echo base_url();?>Transport/index" class="btn btn-primary" >Cancel</a>
                         </div>

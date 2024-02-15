@@ -1,16 +1,16 @@
 <?php
-Class Supplier_model extends CI_Model {
+Class User_model extends CI_Model {
 	function __construct()
 	{
 		// Call the Model constructor
 		parent::__construct();
 	}
 	
-	public function getSingleSupplierInfo($supplier_id,$res)
+	public function getSingleBrandInfo($brand_id,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('id',$supplier_id);
-		$query = $this->db->get("suppliers");
+		$this->db->where('id',$brand_id);
+		$query = $this->db->get("brands");
 		if($res == 1)
 		{
 			return $query->result_array();
@@ -20,11 +20,11 @@ Class Supplier_model extends CI_Model {
 			return $query->num_rows();
 		}	
 	}
-	public function chkSupplierName($supplier_name,$res)
+	public function chkBrandName($brand_name,$res)
 	{
 		$this->db->select('*');
-		$this->db->where('supplier_name',$supplier_name);
-		$query=$this->db->get("suppliers");
+		$this->db->where('brand_name',$brand_name);
+		$query=$this->db->get("brands");
 		if($res == 1)
 		{
 			return $query->result_array();
@@ -35,17 +35,18 @@ Class Supplier_model extends CI_Model {
 		}	
 	}
 
-	public function getAllSuppliers($res,$per_page,$page)
+	public function getAllUsers($res,$per_page,$page)
 	{
 		$this->db->select('*');
-
-		$this->db->order_by('id','ASC');
+		$this->db->join('roles','roles.id=users.role_id','left');
+		$this->db->where('users.id !=','1');
+		$this->db->order_by('users.id','ASC');
 		if($per_page!="")
 		{
 			$this->db->limit($per_page,$page);
 		}
 
-		$result = $this->db->get('suppliers');
+		$result = $this->db->get('users');
 		if($res == 1)
 			return $result->result_array();
 		else

@@ -82,24 +82,6 @@
                                             </div>
 											
 											<div class="form-group row">
-                                                <label for="vehicle_number" class="col-xl-3 col-md-4"><span>*</span>Vehicle Number</label>
-                                                <input type="text" class="form-control  col-md-6" id="vehicle_number" name="vehicle_number" placeholder="Enter Vehicle Number" required value="">
-												 <div id="err_vehicle_number" class="error_msg"></div>
-                                            </div>
-											
-											<div class="form-group row">
-                                                <label for="charges" class="col-xl-3 col-md-4"><span>*</span>Charges</label>
-                                                <input type="text" class="form-control  col-md-6" id="charges" name="charges" placeholder="Enter Per KM charges" required value="">
-												 <div id="err_charges" class="error_msg"></div>
-                                            </div>
-											
-											<div class="form-group row">
-                                                <label for="gst_number" class="col-xl-3 col-md-4"><span>*</span>GST Number</label>
-                                                <input type="text" class="form-control  col-md-6" id="gst_number" name="gst_number" placeholder="Enter Post Code" required value="">
-												 <div id="err_gst_number" class="error_msg"></div>
-                                            </div>
-											
-                                            <div class="form-group row">
                                                 <label class="col-xl-3 col-md-4"><span></span>Status</label>
 												<select name="status" id="status" class="form-control  col-md-3" required>
 													<option value="">Select Status</option>
@@ -112,9 +94,9 @@
                                 
                             </div>
                         </div>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-primary" name="btn_addtrans" id="btn_addtrans">Add</button>
-							<a href="<?php echo base_url();?>Transport/index" class="btn btn-primary" >Cancel</a>
+                        <div class="pull-left">
+                            <button type="submit" class="btn btn-primary" name="btn_addsupl" id="btn_addsupl">Add</button>
+							<a href="<?php echo base_url();?>Suppliers/index" class="btn btn-primary" >Cancel</a>
                         </div>
 						</form>
                             </div>

@@ -5,9 +5,9 @@ class Login extends MY_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load_info();
-		if(get_domain()!=get_dbdomain()){echo appinfo_domain_msg();exit();}
+		//if(get_domain()!=get_dbdomain()){echo appinfo_domain_msg();exit();}
         //if( appinfo()!=get_dbmid() || appinfo()!="1"){echo appinfo_mid_msg();exit();}
-		is_sql_full_group_by_enabled();
+		//is_sql_full_group_by_enabled();
 	}
 	public function index()
 	{

@@ -35,9 +35,9 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group row">
-                                                <label for="supplier_name" class="col-xl-3 col-md-4"><span>*</span>Transport Name</label>
+                                                <label for="supplier_name" class="col-xl-3 col-md-4"><span>*</span>Supplier Name</label>
                                                 <input type="text" class="form-control  col-md-6" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" required value="<?php echo $SupplierInfo[0]['supplier_name'];?>">
-												 <div id="err_transport_name" class="error_msg"></div>
+												 <div id="err_supplier_name" class="error_msg"></div>
                                             </div>
 											
 											<div class="form-group row">
@@ -70,7 +70,7 @@
                                             </div>
 											
 											<div class="form-group row">
-                                                <label for="address" class="col-xl-3 col-md-4"> Address</label>
+                                                <label for="address" class="col-xl-3 col-md-4"> <span>*</span>Address</label>
                                                <textarea name="address" id="address" class="form-control  col-md-6"><?php echo $SupplierInfo[0]['address'];?></textarea>
                                             </div>
 											
@@ -93,9 +93,9 @@
                                 
                             </div>
                         </div>
-                        <div class="pull-right">
-                            <button type="submit" class="btn btn-primary" name="btn_upttrans" id="btn_upttrans">Update</button>
-							<a href="<?php echo base_url();?>Transport/index" class="btn btn-primary" >Cancel</a>
+                        <div class="pull-left">
+                            <button type="submit" class="btn btn-primary" name="btn_uptsupl" id="btn_uptsupl">Update</button>
+							<a href="<?php echo base_url();?>Suppliers/index" class="btn btn-primary" >Cancel</a>
                         </div>
 						</form>
                             </div>

@@ -55,15 +55,19 @@ class Suppliers extends CI_Controller {
 				
 		if(isset($_POST['btn_addbrand']))
 		{
-			$this->form_validation->set_rules('brand_name','Brand Name','required');
-			$this->form_validation->set_rules('status','Brand Status','required');
+			$this->form_validation->set_rules('supplier_name','Supplier Name','required');
+			$this->form_validation->set_rules('mobile','Mobile No.','required');
+			$this->form_validation->set_rules('email','Email Address','required');
+			$this->form_validation->set_rules('gstin','GST Number','required');
+			$this->form_validation->set_rules('tax_number','Tax Number','required');
+			$this->form_validation->set_rules('address','Address','required');
+			$this->form_validation->set_rules('postcode','Post Code','required');
+			
 			if($this->form_validation->run())
 			{
-				$brand_name=$this->input->post('brand_name');
-				$status=$this->input->post('status');
-				$description=$this->input->post('description');
-							
-				$brandname=$this->Supplier_model->chkBrandName($brand_name,0);
+				$supplier_name = $this->input->post('supplier_name');
+				
+				$supname = $this->Supplier_model->chkSupplierName($supplier_name,0);
 
 				if($brandname==0)
 				{
@@ -114,10 +118,15 @@ class Suppliers extends CI_Controller {
 			if($supplierInfo>0)
 			{
 				$data['SupplierInfo'] = $this->Supplier_model->getSingleSupplierInfo($supplier_id,1);
-				if(isset($_POST['btn_uptbrand']))
+				if(isset($_POST['btn_uptsupl']))
 				{
 					$this->form_validation->set_rules('supplier_name','Supplier Name','required');
-					$this->form_validation->set_rules('status','Brand Status','required');
+					$this->form_validation->set_rules('mobile','Mobile No.','required');
+					$this->form_validation->set_rules('email','Email Address','required');
+					$this->form_validation->set_rules('gstin','GST Number','required');
+					$this->form_validation->set_rules('tax_number','Tax Number','required');
+					$this->form_validation->set_rules('address','Address','required');
+					$this->form_validation->set_rules('postcode','Post Code','required');
 
 					if($this->form_validation->run())
 					{

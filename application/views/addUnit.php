@@ -54,7 +54,7 @@
                                 
                             </div>
                         </div>
-                        <div class="pull-right">
+                        <div class="pull-left">
                             <button type="submit" class="btn btn-primary" name="btn_addunit" id="btn_addunit">Add</button>
 							<a href="<?php echo base_url();?>Units/index" class="btn btn-primary" >Cancel</a>
                         </div>

@@ -76,7 +76,7 @@
                             <div class="tab-content" id="top-tabContent">
                                 <div class="tab-pane fade show active" id="top-profile" role="tabpanel" aria-labelledby="top-profile-tab">
                                      <form action="<?php echo $base_url; ?>login/verify" method="post" id="login">
-										<input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
+										
 									<?php if($this->session->flashdata('success')!=""){?>						
 									<div class="alert alert-success">							
 									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>	
@@ -97,19 +97,19 @@
 									</div>					
 									<?php }?>		
 									<div class="form-group">	
-										<!--<input type="hidden" name="user_type" id="user_type" value="Admin" />-->
+										<!--<input type="hidden" name="user_type" id="user_type" value="Admin" />
 									 <select name="user_type" id="user_type" required class="form-control">	
 									<option value="Admin">Admin</option>
 									<option value="Accountant">Accountant</option>			
 									<option value="Manager">Manager</option>
-									</select>
+									</select>-->
 									</div>	
                                     <div class="form-group">
-										<input required="" name="username" type="text" class="form-control" placeholder="Username/ EmailAddress" id="username">
+										<input required="" name="username" type="text" class="form-control" placeholder="Username" id="username">
 										<span id="err_username" style="color:red"></span>
                                     </div>
                                         <div class="form-group">
-                                            <input required="" name="admin_password"  id="admin_password" type="password" class="form-control" placeholder="Password">
+                                            <input required="" name="pass"  id="pass" type="password" class="form-control" placeholder="Password">
 											<span id="err_admin_password" style="color:red"></span>
                                         </div>
                                         <div class="form-terms">
@@ -120,7 +120,7 @@
                                             </div>
                                         </div>
                                         <div class="form-button pull-right">
-                                            <button class="btn btn-primary" type="submit" name="btn_login" id="btn_login" >Login</button>
+                                            <button class="btn btn-primary" type="submit">Login</button>
                                         </div>
                                         <!--<div class="form-footer" style="margin-top: 80px;">
                                             <span>Or Login up with social platforms</span>

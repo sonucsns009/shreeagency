@@ -3,7 +3,7 @@
 	<div class="container-fluid">
                 <div class="card tab2-card">
                     <div class="card-header">
-                        <h5>Update Brand</h5>
+                        <h5>Import Products</h5>
                     </div>
                     <div class="card-body">
                       <?php if($this->session->flashdata('success')!=""){?>
@@ -25,35 +25,34 @@
 							<?php echo $this->session->flashdata('error_msg');?>
 						</div>
 						<?php }?>
-						<form class="needs-validation" name="frm_updatebrand" id="frm_updatebrand" method="POST" enctype="multipart/form-data">
+						<form class="needs-validation" name="frm_addbrand" id="frm_addbrand" method="POST" enctype="multipart/form-data">
                         <div class="tab-content" >
                             <div class="tab-pane fade active show">
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group row">
-                                                <label for="brand_name" class="col-xl-3 col-md-4"><span></span>Brand</label>
-                                                <input type="text" class="form-control  col-md-6" id="brand_name" name="brand_name" placeholder="Enter Brand" required value="<?php echo $BrandInfo[0]['brand_name'];?>">
-												 <div id="err_brand_name" class="error_msg"></div>
-                                            </div>
-											<div class="form-group row">
-                                                <label for="description" class="col-xl-3 col-md-4"><span>*</span> Description</label>
-                                               <textarea name="description" id="description" class="form-control  col-md-6"><?php echo $BrandInfo[0]['description'];?></textarea>
+                                                <label for="brand_name" class="col-xl-3 col-md-4"><span>*</span>Import Products</label>
+                                                <input type="file" id="import_file" name="import_file">
+                                    <span id="import_file_msg" style="display:block;" class="text-danger">
+                                      Note: File must be in CSV format.
+                                    </span>
+												 
                                             </div>
 											
+											<div class="col-sm-12">
                                             <div class="form-group row">
-                                                <label class="col-xl-3 col-md-4"><span></span>Status</label>
-												<select name="status" id="status" class="form-control  col-md-3" required>
-													<option value="">Select Status</option>
-													<option value="1" <?php if($BrandInfo[0]['status']=="1"){ echo 'selected="selected"';}?>>Active</option>
-													<option value="0" <?php if($BrandInfo[0]['status']=="0"){ echo 'selected="selected"';}?>>Inactive</option>
-												</select>
-                                            </div>
+												<a href="<?php echo base_url();?>uploads/csv/import-products-sample.csv"><button type="button" class="btn btn-info pull-right btnExport" title="Download Data in Excel Format">Download sample csv</button>
+												</a>
+											</div>
+											</div>
+			  
                                         </div>
                                     </div>
+                                
                             </div>
                         </div>
                         <div class="pull-left">
-                            <button type="submit" class="btn btn-primary" name="btn_uptbrand" id="btn_uptbrand">Update</button>
+                            <button type="submit" class="btn btn-primary" name="btn_addbrand" id="btn_addbrand">Add</button>
 							<a href="<?php echo base_url();?>Brands/index" class="btn btn-primary" >Cancel</a>
                         </div>
 						</form>

@@ -5,6 +5,10 @@ class Brands extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		//$this->load_global();
+		if($this->session->userdata('logged_in')!=1)
+		{ 
+			redirect(base_url().'logout','refresh');    
+		}
 		$this->load->library("pagination");	
 		$this->load->model('Brand_model');
 	}
